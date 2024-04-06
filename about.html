@@ -279,12 +279,15 @@
     var numberDiv = document.getElementById('number');
 
     // 定义点击事件处理函数
-    clickableDiv.addEventListener('click', function() {
-        // 获取当前数字
-        var currentNumber = parseInt(numberDiv.innerText);
+    document.addEventListener('DOMContentLoaded', function() {
+        const sendButton = document.getElementById('sendButton');
+        sendButton.addEventListener('click', function() {
+            // 处理点击事件的逻辑
+            var currentNumber = parseInt(numberDiv.innerText);
 
-        // 更新数字
-        numberDiv.innerText = currentNumber + 1;
+            // 更新数字
+            numberDiv.innerText = currentNumber + 1;
+        });
     });
     const barrageData = [
         "祝彼教授长命百岁，学贯中西，仁心仁术，犹如墨子之博爱宽容。",
