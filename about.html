@@ -44,7 +44,7 @@
 
         .info-card-footer {
             margin-top: 15px;
-            border-top: 1px solid #eaeaea;
+            /*border-top: 1px solid #eaeaea;*/
             padding-top: 10px;
             font-weight: bold;
         }
@@ -215,14 +215,26 @@
                 <div class="info-card-container">
                     <div class="info-card">
                         <div style="text-align:left;margin-left: 20px;font-size: 35px;color: #990000;font-weight: 650" class="info-card-header"><span style=" font-size: 14px;margin-left: 3px">为丘教授送上祝福的人已经达到</span><div style="display: inline-block" id="number">136</div><span style=" font-size: 16px;margin-left: 3px">位</span></div>
+
                         <div  class="info-card-content">
                             <div style="background: #990000;border-radius: 3px;text-align: left;width: fit-content;margin-left: 20px;margin-top: -10px;color:#fff;"><div style="padding: 5px 10px;font-size: 13px">我们会获取您的地理位置信息，以统计各个区域的人数</div></div>
+                            <p style="color: #990000;font-weight: 550;font-size: 20px;margin-top: 10px">看看大家说了什么</p>
                             <div id="my-word-cloud" style="width: auto; height: auto;max-width: 100%"></div>
-                            <p style="color: #990000;font-weight: 550;font-size: 20px">大家说了什么</p>
+
                     </div>
-                       <div id="clickableDiv" style="text-align: center" class="info-card-footer">
-                        <div style="display: inline-block;background: #990000;border-radius: 5px;width: 50%;height: 60px"><div style="padding: 0px 10px;color: white;font-size: 18px;line-height: 60px">为丘教授送祝福</div></div>
-                    </div>
+                        <div style="display: flex; align-items: center;">
+                            <input style="flex: 1; padding: 10px; border-radius: 5px; border: 2px solid #990000; font-size: 16px; height: 60px; line-height: 1;" type="text" id="barrageInput" placeholder="请输入您对丘教授的祝福！">
+                            <div id="sendButton" style="margin-left: 5px;display: inline-block; background: #990000; border-radius: 5px; width: 30%; height: 60px; text-align: center; line-height: 60px;">
+                                <div style="color: white; font-size: 18px;">送上祝福</div>
+                            </div>
+                        </div>
+
+
+                        <!--                        <input style="width: 80%; padding: 10px; border-radius: 5px; border: 2px solid #990000; font-size: 16px;" type="text" id="barrageInput" placeholder="请输入您对丘教授的祝福！">-->
+
+<!--                        <div id="clickableDiv" style="text-align: center" class="info-card-footer">-->
+<!--                        <div id="sendButton" style="display: inline-block;background: #990000;border-radius: 5px;width: 50%;height: 60px"><div style="padding: -5px 5px;color: white;font-size: 18px;line-height: 60px">为丘教授送祝福</div></div>-->
+<!--                    </div>-->
                 </div>
                     <footer>
                         <div class="back-top float-left">
@@ -281,6 +293,62 @@
 
         // 更新数字
         numberDiv.innerText = currentNumber + 1;
+    });
+    const barrageData = [
+        "祝彼教授长命百岁，学贯中西，仁心仁术，犹如墨子之博爱宽容。",
+        "祝彼教授身体健康，学识渊博，德才兼备，犹如张仲景之医道精湛。",
+        "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+        "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+        "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+        "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+        "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+        "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+        "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+        "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+        "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+        "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+        "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+        "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+        "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+        "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+        "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+        "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+        "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+        "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+        "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+        "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+        "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+        "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+        "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+        // "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+        // "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+        // "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+        // "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+        // "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+        // "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+        // "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+        // "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+        // "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+        // "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+        // "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+        // "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+        // "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+        // "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+        // "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达。"
+
+        // 更多弹幕文本...
+    ];
+    window.sendBarrage = function() {
+        const inputText = document.getElementById('barrageInput').value;
+        if (inputText.trim() !== '') {
+            barrageData.push(inputText); // 将新弹幕添加到数组中// 渲染新弹幕
+            document.getElementById('barrageInput').value = ''; // 清空输入框
+        }
+        console.log(barrageData)
+    }
+
+    document.getElementById('sendButton').addEventListener('click', function() {
+        sendBarrage();
     });
     const tooltip = d3.select('.tooltip');
     fetch('https://zuelmaruixin.github.io/birthNew/guangzhou.geoJson') // 确保这是包含广东省边界的 GeoJSON 文件路径
@@ -368,50 +436,7 @@
 
             // 添加弹幕效果
             // 假设的弹幕数据
-            const barrageData = [
-                "祝彼教授长命百岁，学贯中西，仁心仁术，犹如墨子之博爱宽容。",
-                "祝彼教授身体健康，学识渊博，德才兼备，犹如张仲景之医道精湛。",
-                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
-                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
-                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
-                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
-                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
-                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
-                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
-                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
-                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
-                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
-                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
-                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
-                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
-                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
-                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
-                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
-                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
-                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
-                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
-                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
-                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
-                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
-                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
-                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
-                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
-                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
-                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
-                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
-                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
-                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
-                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
-                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
-                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
-                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
-                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
-                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
-                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
-                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达。"
 
-                // 更多弹幕文本...
-            ];
 
             // 随机生成弹幕的初始垂直位置
             function getRandomY() {
