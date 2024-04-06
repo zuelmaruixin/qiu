@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>己丑肇始</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-cloud/build/d3.layout.cloud.js"></script>
+    <style>
+        /* ... Your existing CSS ... */
+
+        /* Styles for the floating card */
+
+        .info-card-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%); /* Centers the card horizontally */
+            width: calc(100% - 20px); /* Full width minus padding for small screens */
+            max-width: 500px; /* Maximum width of the card */
+            z-index: 10; /* Ensure it's above the map */
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            border-radius: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 16px;
+            text-align: center;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .info-card-header {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .info-card-content p {
+            margin: 5px 0;
+        }
+
+        .info-card-footer {
+            margin-top: 15px;
+            border-top: 1px solid #eaeaea;
+            padding-top: 10px;
+            font-weight: bold;
+        }
+
+        /* ... Any additional CSS ... */
+
+        /* ... Any additional CSS ... */
+
+        .map {
+            width: 100%;
+            height: 100%;
+        }
+        .district {
+            fill: #ccc;
+            stroke: #fff;
+            stroke-width: 1;
+        }
+        .district:hover {
+            fill: #990000;
+        }
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            width: 120px;
+            background: white;
+            color: #333;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px; /* 对于移动设备进行调整 */
+        }
+        /* 弹幕样式 */
+        .barrage {
+            font-family: 'Arial', sans-serif;
+            font-size: 50px; /* 对于移动设备进行调整 */
+            opacity: 0.7;
+            font-weight: 650;
+            pointer-events: none;
+            fill:#990000
+        }
+    </style>
+    <meta name="description" content="Rooney Portfolio Template">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+    <meta name="keywords" content="personal, portfolio">
+    <link rel="stylesheet" href="./css/MyukiDanMu.css" />
+    <script type="text/javascript" src="./js/MyukiDanMu.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css"/>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- FAVICON  -->
+    <link rel="shortcut icon" href="img/favico.png">
+
+    <!-- Font icons -->
+    <link rel="stylesheet" href="icon-fonts/fontawesome-5.8.1/css/all.min.css"/>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,900" rel="stylesheet">
+    <style>
+        .danmu {
+            /* background-color: #c8d6e5; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .myuki-danmu_box cover{
+            background: transparent!important;
+        }
+        .form-box {
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .form-box textarea {
+            padding: 16px;
+            margin-bottom: 12px;
+            outline: none;
+            border-radius: 6px;
+            font-size: 24px;
+            height: 50px;
+            border: none;
+            /*box-shadow: inset 0px 0px 8px #576574;*/
+        }
+
+        .form-box #tucao {
+            padding: 8px;
+            outline: none;
+            cursor: pointer;
+            background-color: #576574;
+            border-radius: 8px;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            transition: all .35s ease;
+        }
+
+        #tucao:hover {
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .AwesomeDanMu {
+            height: 250px;
+            width: 100%;
+        }
+        .container{
+            width: 80%;
+            height: 100%;
+        }
+        h1{
+            text-align: center;
+            line-height: 1;
+            padding: 32px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Preloading -->
+<div id="preloader">
+    <div class="spinner">
+        <div class="uil-ripple-css" style="transform:scale(0.29);"><div></div><div></div></div>
+    </div>
+</div>
+
+<div class="page-loader show"></div>
+
+
+<main>
+
+    <!-- HEADER
+    ================================================== -->
+    <header>
+        <!-- Logo -->
+        <a data-type="ajax-load" href="index.html" class="logo">
+            <img src="img/logo.png">
+        </a>
+        <!-- Menu -->
+        <div class="menu">
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <div id="smooth-scroll">
+
+        <!-- PAGE
+        ==================================================-->
+        <div style="width: 100%" class="container text-left subpage">
+            <h1 style="color: #141414" class="page-title box-animation"  data-delay="100">1949-至今</h1>
+            <div class="space30"></div>
+            <p style="color:#141414;" class="subtext box-animation"  data-delay="200">己丑肇始，数道通天：壬午岁终，己丑重光，丘氏宗师，天赋异禀，生于此年。历七十有五载，经纬万千，以数通天地，解宇内之奥秘。功盖世，德配天，于数学之海，独树一帜。 <span>今特庆耆寿，祝韶光再续，智海无涯，丘氏宗师，长春不老，数道永昌。</span> <br>感谢您为邱老送上祝福</p>
+            <p></p>
+            <div class="space50"></div>
+            <div id="map" class="map"></div>
+            <div class="tooltip"></div>
+
+                <div class="info-card-container">
+                    <div class="info-card">
+                        <div style="text-align:left;margin-left: 20px;font-size: 35px;color: #990000;font-weight: 650" class="info-card-header"><span style=" font-size: 14px;margin-left: 3px">为丘教授送上祝福的人已经达到</span><div style="display: inline-block" id="number">136</div><span style=" font-size: 16px;margin-left: 3px">位</span></div>
+                        <div  class="info-card-content">
+                            <div style="background: #990000;border-radius: 3px;text-align: left;width: fit-content;margin-left: 20px;margin-top: -10px;color:#fff;"><div style="padding: 5px 10px;font-size: 13px">我们会获取您的地理位置信息，以统计各个区域的人数</div></div>
+                            <div id="my-word-cloud" style="width: auto; height: auto;max-width: 100%"></div>
+                            <p style="color: #990000;font-weight: 550;font-size: 20px">大家说了什么</p>
+                    </div>
+                       <div id="clickableDiv" style="text-align: center" class="info-card-footer">
+                        <div style="display: inline-block;background: #990000;border-radius: 5px;width: 50%;height: 60px"><div style="padding: 0px 10px;color: white;font-size: 18px;line-height: 60px">为丘教授送祝福</div></div>
+                    </div>
+                </div>
+                    <footer>
+                        <div class="back-top float-left">
+                            <i class="fas fa-chevron-up"></i> <p>Back to Top</p>
+                        </div>
+                        <div class="float-left copyright">
+                            <img style="max-width: 100%" src="https://s21.ax1x.com/2024/04/06/pFqKcDA.png" alt="">
+                        </div>
+                        <!-- Social Links -->
+                    </footer>
+                </div>
+
+
+            </div>
+            <!-- ... The rest of your HTML ... -->
+
+
+            <!-- ... Your existing HTML below ... -->
+
+        </div>
+
+
+    </div> <!-- smooth scroll end -->
+
+
+    <div class="right-menu">
+        <div class="menu-close"></div>
+        <div class="page-menu">
+            <ul>
+                <li><a  href="index.html">己丑肇始</a></li>
+                <li><a  href="all-projects.html">欣喜之时</a></li>
+                <li><a  href="about.html">敬上祝福</a></li>
+        </div>
+    </div>
+
+
+</main>
+
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-cloud/build/d3.layout.cloud.js"></script>
+
+<script>
+    var clickableDiv = document.getElementById('clickableDiv');
+
+    // 获取需要更新的数字div元素
+    var numberDiv = document.getElementById('number');
+
+    // 定义点击事件处理函数
+    clickableDiv.addEventListener('click', function() {
+        // 获取当前数字
+        var currentNumber = parseInt(numberDiv.innerText);
+
+        // 更新数字
+        numberDiv.innerText = currentNumber + 1;
+    });
+    const tooltip = d3.select('.tooltip');
+    fetch('https://zuelmaruixin.github.io/birthNew/guangzhou.geoJson') // 确保这是包含广东省边界的 GeoJSON 文件路径
+        .then(response => response.json())
+        .then(geojsonData => {
+            const selectedCities = ["广州市", "深圳市", "珠海市", "汕头市", "佛山市", "韶关市", "湛江市", "肇庆市", "江门市", "茂名市", "惠州市", "梅州市", "汕尾市", "河源市", "阳江市", "清远市", "东莞市", "中山市", "潮州市", "揭阳市", "云浮市"];
+
+            const cityData = geojsonData.features.filter(feature => selectedCities.includes(feature.properties.name));
+
+            const svg = d3.select('#map').append('svg')
+                .attr('viewBox', `0 0 1200 900`) // 添加viewBox属性用于响应式
+                .attr('preserveAspectRatio', 'xMidYMid meet')
+                .classed('map', true);
+
+            const projection = d3.geoMercator()
+                .center([116.6788, 23.3611])
+                .scale(9000)
+                .translate([1100, 350]); // 缩放和平移以适应更大的视窗
+
+            const pathGenerator = d3.geoPath().projection(projection);
+
+            svg.selectAll('.district')
+                .data(cityData)
+                .enter().append('path')
+                .attr('d', pathGenerator)
+                .attr('class', 'district')
+                .style('fill', d => {
+                    if (d.properties.name === '广州市' || d.properties.name === '韶关市' || d.properties.name === '云浮市' || d.properties.name === '湛江市') {
+                        return '#990000'; // 红色填充
+                    } else {
+                        return '#ccc'; // 默认灰色填充
+                    }
+                });
+            svg.selectAll('.city-marker')
+                .data(cityData.filter(d => d.properties.name === '阳江市' || d.properties.name === '茂名市' || d.properties.name === '清远市' || d.properties.name === '肇庆市'))
+                .enter()
+                .append('circle')
+                .attr('class', 'city-marker')
+                .attr('cx', d => projection(d.properties.center)[0])
+                .attr('cy', d => projection(d.properties.center)[1])
+                .attr('r', 20)
+                .style('fill', '#990000');
+            const bounds = {
+                shantou: { minLat: 23.0, maxLat: 23.6, minLng: 116.4, maxLng: 116.6 },
+                shanwei: { minLat: 22.7, maxLat: 23.4, minLng: 115.2, maxLng: 116.1 },
+                meizhou: { minLat: 23.7, maxLat: 24.7, minLng: 115.6, maxLng: 116.9 },
+                chaozhou: { minLat: 23.4, maxLat: 23.7, minLng: 116.5, maxLng: 117.1 }
+            };
+
+            // 减小点的尺寸范围
+            // 生成落在四个城市内的随机点
+            function generateRandomPointsForCity(cityBounds, numberOfPoints) {
+                let points = [];
+                for (let i = 0; i < numberOfPoints; i++) {
+                    const lat = Math.random() * (cityBounds.maxLat - cityBounds.minLat) + cityBounds.minLat;
+                    const lng = Math.random() * (cityBounds.maxLng - cityBounds.minLng) + cityBounds.minLng;
+                    points.push({ lat: lat, lng: lng, value: Math.random()*3 }); // 'value' 可以对应点的大小
+                }
+                return points;
+            }
+
+            const allPoints = [
+                ...generateRandomPointsForCity(bounds.shantou, 35),
+                ...generateRandomPointsForCity(bounds.shanwei, 35),
+                ...generateRandomPointsForCity(bounds.meizhou, 40),
+                ...generateRandomPointsForCity(bounds.chaozhou, 15)
+            ];
+
+            // Function to generate random points, this should be replaced with your actual data points
+
+            // Size scale for the points
+            const sizeScale = d3.scaleSqrt().domain([0, 1]).range([5, 15]);
+
+            // Draw the scatter points
+            svg.selectAll('.scatter-point')
+                .data(allPoints)
+                .enter().append('circle')
+                .attr('class', 'scatter-point')
+                .attr('cx', d => projection([d.lng, d.lat])[0])
+                .attr('cy', d => projection([d.lng, d.lat])[1])
+                .attr('r', d => sizeScale(d.value))
+                .attr('fill', '#990000') // 设置颜色为红色
+                .attr('stroke', '#990000') // 边框颜色也设置为红色
+                .attr('stroke-width', 0); // 不显示边框
+
+            // 添加弹幕效果
+            // 假设的弹幕数据
+            const barrageData = [
+                "祝彼教授长命百岁，学贯中西，仁心仁术，犹如墨子之博爱宽容。",
+                "祝彼教授身体健康，学识渊博，德才兼备，犹如张仲景之医道精湛。",
+                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达风范。",
+                "祝彼教授寿比南山，学富五车，仁德之举，犹如孔门弟子之风华。",
+                "祝彼教授岁寒甲子，学兼文武，仁心仁术，犹如关羽之豪杰风范。",
+                "祝彼教授身体康健，学识渊博，德行高洁，犹如庄子之豁达。"
+
+                // 更多弹幕文本...
+            ];
+
+            // 随机生成弹幕的初始垂直位置
+            function getRandomY() {
+                return Math.random() *5* parseInt(svg.style('height'));
+            }
+
+            // 为每条弹幕创建一个文本元素
+            barrageData.forEach((text, index) => {
+                const barrage = svg.append('text')
+                    .attr('x', parseInt(svg.style('width'))*5) // 从右侧开始
+                    .attr('y', getRandomY())
+                    .attr('class', 'barrage')
+                    .text(text);
+
+                // 计算弹幕移动的持续时间，基于文本长度
+                const duration = 1000 + text.length * 200;
+
+                // 开始弹幕动画
+                barrage.transition()
+                    .delay(index * 500) // 每条弹幕的延迟
+                    .duration(duration)
+                    .attr('x', -barrage.node().getComputedTextLength()) // 移动到完全离开屏幕
+                    .ease(d3.easeLinear)
+                    .on('end', function() {
+                        // 动画结束后重新开始
+                        d3.select(this).remove(); // 移除当前弹幕元素
+                        const newBarrage = svg.append('text') // 创建新的弹幕元素
+                            .attr('x', parseInt(svg.style('width'))*3) // 从右侧开始
+                            .attr('y', getRandomY())
+                            .attr('class', 'barrage')
+                            .text(text);
+                        startBarrageAnimation(newBarrage); // 启动新的动画
+                    });
+
+                function startBarrageAnimation(barrage) {
+                    const duration = 9000 + barrage.text().length * 200;
+                    barrage.transition()
+                        .delay(0)
+                        .duration(duration)
+                        .attr('x', -barrage.node().getComputedTextLength())
+                        .ease(d3.easeLinear)
+                        .on('end', function() {
+                            d3.select(this).remove(); // 当动画结束时移除元素
+                            const newBarrage = svg.append('text')
+                                .attr('x', parseInt(svg.style('width')))
+                                .attr('y', getRandomY())
+                                .attr('class', 'barrage')
+                                .text(barrage.text());
+                            startBarrageAnimation(newBarrage); // 重新启动动画
+                        });
+                }
+
+            });
+        });
+</script>
+<script>
+    var words = [
+
+            {"text": "教授", "size": 40},
+            {"text": "犹如", "size": 40},
+            {"text": "风范", "size": 24},
+            {"text": "仁心", "size": 14},
+            {"text": "仁术", "size": 14},
+            {"text": "学识渊博", "size": 13},
+            {"text": "寿比南山", "size": 13},
+            {"text": "学富五车", "size": 13},
+            {"text": "仁德", "size": 13},
+            {"text": "孔门", "size": 13},
+            {"text": "弟子", "size": 13},
+            {"text": "风华", "size": 13},
+            {"text": "甲子", "size": 13},
+            {"text": "文武", "size": 13},
+            {"text": "关羽", "size": 13},
+            {"text": "豪杰", "size": 13},
+            {"text": "身体", "size": 12},
+            {"text": "康健", "size": 12},
+        {"text": "博学", "size": 38},
+        {"text": "权威", "size": 25},
+        {"text": "洞察力强", "size": 43},
+        {"text": "严谨", "size": 30},
+        {"text": "创新", "size": 20},
+        {"text": "精湛", "size": 36},
+        {"text": "敏锐", "size": 28},
+        {"text": "导师", "size": 41},
+        {"text": "知识传播者", "size": 32},
+        {"text": "指导者", "size": 22},
+        {"text": "思想家", "size": 39},
+        {"text": "智者", "size": 34},
+        {"text": "开拓者", "size": 27},
+        {"text": "献身者", "size": 37},
+            {"text": "德行", "size": 12},
+            {"text": "高洁", "size": 12},
+            {"text": "庄子", "size": 12},
+            {"text": "豁达", "size": 12},
+            {"text": "长命百岁", "size": 1},
+            {"text": "学贯中西", "size": 1},
+            {"text": "墨子", "size": 1},
+            {"text": "博爱", "size": 1},
+            {"text": "宽容", "size": 1},
+            {"text": "身体健康", "size": 1},
+            {"text": "德才兼备", "size": 1},
+            {"text": "精湛", "size": 1}
+
+
+    ];
+
+    var width = document.getElementById('my-word-cloud').offsetWidth;
+    var height =300;
+   console.log(document.getElementById('my-word-cloud').offsetWidth)
+    var fill = d3.scaleOrdinal(d3.schemeCategory10);
+
+    d3.layout.cloud().size([width, height])
+        .words(words)
+        .rotate(0)
+        .fontSize(function(d) { return d.size; })
+        .on("end", draw)
+        .start();
+    function draw(words) {
+        d3.select("#my-word-cloud").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+
+            .selectAll("text")
+            .data(words)
+            .enter().append("text")
+            .style("font-size", function(d) { return d.size + "px"; })
+            .style("font-family", "Impact")
+            // 设置文字颜色为红色
+            .style("fill", "#990000")
+            .attr("text-anchor", "middle")
+            .attr("transform", function(d) {
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+            })
+            .text(function(d) { return d.text; });
+    }
+
+</script>
+</body>
+</html>
