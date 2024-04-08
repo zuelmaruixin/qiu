@@ -346,7 +346,7 @@
         sendBarrage();
     });
     const tooltip = d3.select('.tooltip');
-    fetch('https://zuelmaruixin.github.io/birthNew/guangzhou.geoJson') // 确保这是包含广东省边界的 GeoJSON 文件路径
+    fetch('https://github.com/zuelmaruixin/qiu/blob/main/guangzhou.geoJson') // 确保这是包含广东省边界的 GeoJSON 文件路径
         .then(response => response.json())
         .then(geojsonData => {
             const selectedCities = ["广州市", "深圳市", "珠海市", "汕头市", "佛山市", "韶关市", "湛江市", "肇庆市", "江门市", "茂名市", "惠州市", "梅州市", "汕尾市", "河源市", "阳江市", "清远市", "东莞市", "中山市", "潮州市", "揭阳市", "云浮市"];
